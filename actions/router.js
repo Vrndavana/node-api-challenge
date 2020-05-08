@@ -3,6 +3,14 @@ const Projects = require("../data/helpers/projectModel.js");
 const Actions = require("../data/helpers/actionModel.js");
 const router = express.Router();
 
+router.get("/", (req, res) => {
+    Actions.get()
+      .then((actions) => {res.status(200).json(actions);})
+      .catch((err) => {
+        res.status(500).json({ error: "Could not retrieve projects data" });
+      });
+  });
+
 router.post("/", validateAction, (req, res) => {
   Actions.insert(req.body)
     .then((action) => {res.status(201).json(action);})
